@@ -11,11 +11,13 @@
 ::Check if inputs are provided and insert dummy variables if not provided
 if "%~1"=="" (SET in1=empty) else (SET in1=%1%)
 if "%~2"=="" (SET in2=empty) else (SET in2=%2%)
+if "%~3"=="" (SET in3=empty) else (SET in3=%3%)
 
 
 
 echo in1: %in1%
 echo in2: %in2%
+echo in3: %in3%
 
 
 if %in1%==-help (set in1=-h)
@@ -26,6 +28,7 @@ if %in1%==-h (
 	echo      noflags simply deactivate current environment and activate a new one
 	echo      -h      This help menu
 	echo      -sp     Launch spyder
+	echo      -new    Launch spyder (new instance)
 	) else (
 	echo activating environment
 	call conda deactivate
@@ -33,7 +36,11 @@ if %in1%==-h (
 	
 	
 	if %in2%==-sp (
-		call spyder
+		if %in3%==-new (
+			call spyder --new-instance
+			) else (
+			call spyder
+			)
 		)
 	
 	)
